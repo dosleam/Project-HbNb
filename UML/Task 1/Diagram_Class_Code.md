@@ -1,5 +1,6 @@
 # Diagramme de classes
 
+```mermaid
 classDiagram
     class User {
         UUID id
