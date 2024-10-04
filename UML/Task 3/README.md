@@ -39,7 +39,29 @@ The final technical document will compile these diagrams and explanations, offer
 # Diagramme UML
 
 Description of the Uml diagram:
+This diagram shows a three-layer architecture for an application:
 
+Presentation Layer (PresentationLayer):
+
+This is the interface with the user or other external systems.
+It contains several APIs to interact with different parts of the application:
+UserAPI() for users,
+PlaceAPI() for places,
+ReviewAPI() for reviews,
+AmenityAPI() for amenities.
+It uses a Facade Pattern to simplify communication with the business logic layer.
+Business Logic Layer (BusinessLogicLayer):
+
+This is where the core logic of the application resides.
+It contains models to manage users, places, reviews, and amenities.
+Persistence Layer (PersistenceLayer):
+
+It manages database access with the DatabaseAccess() method.
+Relationships Between Layers:
+
+The presentation layer communicates with the business logic layer via the Facade Pattern, simplifying interactions.
+The business logic layer performs database operations via the persistence layer.
+This structure separates responsibilities, making the application easier to maintain and understand.
 
 ```mermaid
 classDiagram
@@ -72,7 +94,47 @@ Cliquez sur ce lien pour consulter le diagramme: [Mermaid Live Editor](https://w
 # Diagramme de classes
 
 Description of the Classes diagram:
+This diagram describes the relationships between several entities in a system: User, Place, Amenity, and Review, along with their association through an intermediary class, Amenity_Place. Here’s a simpler explanation:
 
+User:
+
+Each user has attributes like a unique ID, a name, email, password, and creation and update timestamps.
+The user can:
+Create a place (createPlace()).
+Write a review (createReview()).
+Relationship: A user owns multiple places and creates multiple reviews.
+Place:
+
+A place has attributes like an ID, name, location, price, owner (who is a user), and timestamps for creation and update.
+The place owner can:
+Add amenities (addAmenity()).
+Update details like name or price (updateDetails()).
+Relationship:
+A place can have multiple reviews.
+A place is referenced by multiple reviews.
+A place can have multiple amenities via an association with the Amenity_Place class.
+Amenity:
+
+An amenity has attributes like an ID, name, and timestamps for creation and update.
+It can be associated with multiple places.
+The amenity can update its name via the updateName() method.
+Review:
+
+A review contains an ID, a comment, a rating, an author (the user), a place, and timestamps for creation and update.
+The review's author can modify it via editReview() (changing the comment and rating).
+Relationship:
+Each review is created by a user and is linked to a specific place.
+Amenity_Place (Amenity-Place Association):
+
+This class represents a many-to-many relationship between places and amenities. Each amenity can be associated with multiple places, and each place can have multiple amenities.
+Entity Relationships:
+
+A User owns multiple Place.
+A User creates multiple Review.
+A Place can have multiple Review and multiple Amenity (via Amenity_Place).
+A Review is linked to both a Place and a User.
+An Amenity is associated with multiple places via Amenity_Place.
+This diagram illustrates how users, places, reviews, and amenities are interconnected.
 
 ```mermaid
 classDiagram
