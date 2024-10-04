@@ -33,8 +33,8 @@ Tasks and Deliverables:
 High-Level Package Diagram: Illustrates the layered architecture and communication via the facade pattern.
 Detailed Class Diagram: Depicts entities and their relationships in the Business Logic layer.
 Sequence Diagrams: Visualizes the flow of API calls for key operations like user registration, place creation, review submission, and place listing.
-The final technical document will compile these diagrams and explanations, offering a detailed and professional reference for HBnB Evolution's development.
----------------------------------------------------------------------------------------------------------------------------------------------------------
+The final technical document will compile these diagrams and explanations, offering a detailed and professional reference for HBnB Evolutions development.
+
 
 # Diagramme UML
 
