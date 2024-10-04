@@ -51,9 +51,7 @@ classDiagram
 
     User "1" --o "0..*" Place : Owns
     User "1" --o "0..*" Review : Creates
-    Place "0..*" --o "0..*" Review : Has
     Place "1" --o "0..*" Review : Refers
-    Review "1" --o "1" Place : Refers
     Review "1" --o "1" User : Made by
     Place "1" --o "0..*" Amenity_Place : "Associates"
     Amenity "1" --o "0..*" Amenity_Place : "Associates"

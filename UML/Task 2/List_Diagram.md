@@ -18,7 +18,7 @@ sequenceDiagram
         BusinessLogic->>Database: insertUser(username, email, hashedPassword)
         Database-->>BusinessLogic: User inserted (user_id)
         BusinessLogic-->>API: userCreated/Error (user_id, email, password)
-        API-->>User: 201 Created (user_id, welcome message) <br />400 (Data Error)
+        API-->>User: 200 Recuperation (user_id, welcome message) <br />400 (Data Error)
     end
 ```
 

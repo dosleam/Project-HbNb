@@ -187,9 +187,7 @@ classDiagram
 
     User "1" --o "0..*" Place : Owns
     User "1" --o "0..*" Review : Creates
-    Place "0..*" --o "0..*" Review : Has
     Place "1" --o "0..*" Review : Refers
-    Review "1" --o "1" Place : Refers
     Review "1" --o "1" User : Made by
     Place "1" --o "0..*" Amenity_Place : "Associates"
     Amenity "1" --o "0..*" Amenity_Place : "Associates"
@@ -312,7 +310,7 @@ sequenceDiagram
         BusinessLogic->>Database: insertUser(username, email, hashedPassword)
         Database-->>BusinessLogic: User inserted (user_id)
         BusinessLogic-->>API: userCreated/Error (user_id, email, password)
-        API-->>User: 201 Created (user_id, welcome message) <br />400 (Data Error)
+        API-->>User: 200 Recuperation (user_id, welcome message) <br />400 (Data Error)
     end
 ```
 
