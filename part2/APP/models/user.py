@@ -1,10 +1,10 @@
 from datetime import datetime
 import uuid
 from email_validator import validate_email, EmailNotValidError
-from place import Place
+
 
 used_emails = set()
-class User():
+class User:
 
 
     def __init__(self, first_name, last_name, email, is_admin=False):
