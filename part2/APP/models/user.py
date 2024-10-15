@@ -4,7 +4,7 @@ from email_validator import validate_email, EmailNotValidError
 
 
 used_emails = set()
-class User():
+class User:
 
 
     def __init__(self, first_name, last_name, email, is_admin=False):
