@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
 from email_validator import validate_email, EmailNotValidError
+from place import Place
 
 used_emails = set()
 class User():
