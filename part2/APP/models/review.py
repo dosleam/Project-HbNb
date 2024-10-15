@@ -31,3 +31,6 @@ class Review:
                 raise ValueError("Rating must be an integer between 1 and 5")
             self.rating = rating
         self.updated_at = datetime.now
+
+    def __repr__(self):
+        return f"<Review id={self.id}, rating={self.rating}, place={self.place.title}, user={self.user.first_name} {self.user.last_name}>"
