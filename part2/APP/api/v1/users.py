@@ -11,14 +11,6 @@ user_model = api.model('User', {
     'email': fields.String(required=True, description='Email of the user')
 })
 
-# Define the model for user responses (excluding sensitive fields like password)
-user_response_model = api.model('UserResponse', {
-    'id': fields.String(description='ID of the user'),
-    'first_name': fields.String(description='First name of the user'),
-    'last_name': fields.String(description='Last name of the user'),
-    'email': fields.String(description='Email of the user')
-})
-
 # Initialize the facade
 facade = HBnBFacade()
 
@@ -48,12 +40,15 @@ class UserList(Resource):
             'email': new_user.email
         }, 201
 
-    @api.marshal_list_with(user_response_model)
     @api.response(200, 'List of users retrieved successfully')
     def get(self):
         """Retrieve a list of all users"""
         users = facade.get_all_users()
-        return users, 200
+        return [{
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email} for user in users]
 
 
 # Define the GET /api/v1/users/<user_id> and PUT /api/v1/users/<user_id> endpoints
