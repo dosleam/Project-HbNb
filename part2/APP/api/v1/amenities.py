@@ -4,13 +4,14 @@ from app.services.facade import HBnBFacade
 api = Namespace('amenities', description='Amenity operations')
 
 # Define the amenity model for input validation and documentation
-amenity_model = api.model('Amenity', {
-    'name': fields.String(required=True,
-    description='Name of the amenity')
-})
+amenity_model = api.model(
+    'Amenity',
+    {'name': fields.String(
+        required=True,
+        description='Name of the amenity')})
 
-amenities = []
 facade = HBnBFacade()
+
 
 @api.route('/')
 class AmenityList(Resource):
@@ -19,21 +20,18 @@ class AmenityList(Resource):
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new amenity"""
-        amenity = request.get_json()
-
-        if not amenity or 'name' not in amenity:
-            return jsonify({"error":"Invalid input data"}), 400
-        
-        for amenity_registered in amenities:
-            if amenity_registered == amenity:
-                return jsonify({"error": "Amenity already registered"}), 400
-
-        amenities.append(amenity)
+        amenity_data = api.payload
+        try:
+            new_amenity = facade.create_amenity(amenity_data)
+        except ValueError as e:
+            return {"error": "Input data invalid"}, 400
+        return {"id": new_amenity.id, "name": new_amenity.name}, 201
 
     @api.response(200, 'List of amenities retrieved successfully')
     def get(self):
         """Retrieve a list of all amenities"""
-        return amenities, 200
+        amenities = get_all_amenities()
+        return {"Lists of amenities": amenities}, 200
 
 
 @api.route('/<amenity_id>')
@@ -42,8 +40,8 @@ class AmenityResource(Resource):
     @api.response(404, 'Amenity not found')
     def get(self, amenity_id):
         """Get amenity details by ID"""
-        # Placeholder for the logic to retrieve an amenity by ID
-        pass
+        my_amenity = get_amenity(amenity_id)
+        return my_amenity, 200
 
     @api.expect(amenity_model)
     @api.response(200, 'Amenity updated successfully')
@@ -51,5 +49,5 @@ class AmenityResource(Resource):
     @api.response(400, 'Invalid input data')
     def put(self, amenity_id):
         """Update an amenity's information"""
-        # Placeholder for the logic to update an amenity by ID
-        pass
+        amenity_data = api.payload
+        return update_amenity(amenity_id, amenity_data), 200
