@@ -1,3 +1,6 @@
+# 1. Run the server
+# 2. Run the test file
+
 import sys
 sys.path.append("..")
 

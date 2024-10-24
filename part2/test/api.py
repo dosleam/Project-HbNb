@@ -1,3 +1,6 @@
+# 1.Run the server
+# 2.Run the test file
+
 import unittest
 from unittest.mock import patch, Mock
 import requests
