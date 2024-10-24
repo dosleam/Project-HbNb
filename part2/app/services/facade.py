@@ -51,7 +51,7 @@ class HBnBFacade:
             raise ValueError("Latitude must be between -90 and 90")
         if not (-180 <= place_data['longitude'] <= 180):
             raise ValueError("Longitude must be between -180 and 180")
-        owner = self.user_repo.get(place_data['owner_id'])
+        owner = self.user_repo.get(place_data['owner'])
         if not owner:
             raise ValueError("Owner not found")
 
