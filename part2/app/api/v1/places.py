@@ -1,5 +1,5 @@
 from flask_restx import Namespace, Resource, fields
-from app.services.facade import HBnBFacade
+from app.services import facade
 
 api = Namespace('places', description='Place operations')
 
@@ -26,8 +26,6 @@ place_model = api.model('Place', {
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
-facade = HBnBFacade()
-
 @api.route('/')
 class PlaceList(Resource):
     @api.expect(place_model)
@@ -36,6 +34,8 @@ class PlaceList(Resource):
     def post(self):
         """Register a new place"""
         place_data = api.payload
+        amenities = place_data['amenities']
+        del place_data['amenities']
         try:
             new_place = facade.create_place(place_data)
         except ValueError as e:
