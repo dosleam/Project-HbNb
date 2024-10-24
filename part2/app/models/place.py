@@ -18,6 +18,9 @@ class Place(BaseModel):
 
     @title.setter
     def title(self, value):
+        if value is None:
+            raise ValueError("You must enter a title")
+ 
         if len(value) > 100:
             raise ValueError("Title must not exceed 100 characters")
         self._title = value

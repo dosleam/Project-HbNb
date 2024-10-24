@@ -16,6 +16,9 @@ class User(BaseModel):
 
     @first_name.setter
     def first_name(self, value):
+        if value is None:
+            raise ValueError("You must enter a first name")
+
         if len(value) > 50:
             raise ValueError("First name must not exceed 50 characters")
         self._first_name = value
@@ -26,6 +29,9 @@ class User(BaseModel):
 
     @last_name.setter
     def last_name(self, value):
+        if value is None:
+            raise ValueError("You must enter a last name")
+
         if len(value) > 50:
             raise ValueError("Last name must not exceed 50 characters")
         self._last_name = value
@@ -36,8 +42,11 @@ class User(BaseModel):
 
     @email.setter
     def email(self, value):
+        if value is None:
+            raise ValueError("You must enter an email")
+
         if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
-            raise ValueError("Invalid email format")
+            raise ValueError("Invalid input data")
         self._email = value
 
     def add_place(self, place):
