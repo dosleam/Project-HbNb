@@ -1,5 +1,5 @@
 # 1.Run the server
-# 2.Run the test file
+# 2.Run the test file "python3 api.py"
 
 import unittest
 from unittest.mock import patch, Mock
