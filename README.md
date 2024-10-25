@@ -84,7 +84,7 @@ curl -X POST "http://localhost:5000/api/v1/amenities/" \
 ```python
 # Creating a place
 
-curl -X POST http://localhost:5000/api/v1/places/ \
+curl -X POST "http://localhost:5000/api/v1/places/" \
      -H "Content-Type: application/json" \
      -d '{
            "title": "Cozy Apartment",
@@ -114,7 +114,7 @@ curl -X POST http://localhost:5000/api/v1/places/ \
 
 ```python
 
-curl -X POST http://localhost:5000/api/v1/places/ \
+curl -X POST "http://localhost:5000/api/v1/places/" \
      -H "Content-Type: application/json" \
      -d '{
            "title": "Cozy Apartment",
@@ -131,7 +131,58 @@ curl -X POST http://localhost:5000/api/v1/places/ \
     "ValueError": "Latitude must be between -90 and 90"
 }
 ```
+## Test review
 
+```python
+
+# Creating a review
+
+curl -X POST "http://localhost:5000/api/v1/reviews/" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "text": "Great place to stay!",
+           "rating": 5,
+           "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+           "place_id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+         }'
+
+
+# expected response
+
+{
+  "id": "2fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "text": "Great place to stay!",
+  "rating": 5,
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "place_id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+
+// 201 Created
+```
+- Testing invalid input
+
+```python
+
+url -X POST "http://localhost:5000/api/v1/reviews/" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "text": "Great place to stay!",
+           "rating": -1,
+           "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+           "place_id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+         }'
+
+
+
+# expected response
+
+{
+    "ValueError": "Rating must be between 1 and 5"
+}
+```
 ## AUTHORS
 
 The authors are Lucas Legrand, Ema Decot, Jeremy Sousa, Mariama Goudiaby
+
+
+[]<iframe src="https://giphy.com/embed/elrFAUtV7ZOH7TSPhF" width="480" height="480" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hyperrpg-twitch-hyper-rpg-kollok-elrFAUtV7ZOH7TSPhF">via GIPHY</a></p>
