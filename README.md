@@ -184,5 +184,3 @@ url -X POST "http://localhost:5000/api/v1/reviews/" \
 
 The authors are Lucas Legrand, Ema Decot, Jeremy Sousa, Mariama Goudiaby
 
-
-![Description of the GIF](https://media.giphy.com/media/elrFAUtV7ZOH7TSPhF/giphy.gif)
