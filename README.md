@@ -7,11 +7,11 @@ The HBNB Project is a collaborative effort by a team of four, aimed at building 
 This project allowed us to deepen our skills in backend development, database management, and teamwork in a dynamic coding environment.
 
 
-## Usage
+## Test user
 
 ```python
 # Creating a user
-curl -X POST "http://127.0.0.1:5000/api/v1/users/" -H "Content-Type: application/json" -d '{
+curl -X POST "http:/localhost:5000/api/v1/users/" -H "Content-Type: application/json" -d '{
     "first_name": "John",
     "last_name": "Doe",
     "email": "john.doe@example.com"
@@ -27,10 +27,10 @@ curl -X POST "http://127.0.0.1:5000/api/v1/users/" -H "Content-Type: application
 }
 // 200 OK
 ```
-Testing invalid input
+- Testing invalid input
 
 ```python
-curl -X POST "http://127.0.0.1:5000/api/v1/users/" -H "Content-Type: application/json" -d '{
+curl -X POST "http:/localhost:5000/api/v1/users/" -H "Content-Type: application/json" -d '{
     "first_name": "",
     "last_name": "",
     "email": "invalid-email"
@@ -44,12 +44,12 @@ curl -X POST "http://127.0.0.1:5000/api/v1/users/" -H "Content-Type: application
 
 // 400 Bad Request
 ```
-
+## Test amenity
 
 ```python
 # Creating an amenity
 
-curl -X POST "http://yourapiurl.com/api/v1/amenities/" \
+curl -X POST "http://localhost:5000/api/v1/amenities/" \
      -H "Content-Type: application/json" \
      -d '{"name": "Wi-Fi"}'
 
@@ -63,10 +63,28 @@ curl -X POST "http://yourapiurl.com/api/v1/amenities/" \
 // 201 Created
 ```
 
+- Testing invalid input
+
+```python
+curl -X POST "http://localhost:5000/api/v1/amenities/" \
+     -H "Content-Type: application/json" \
+     -d '{"name": "Wi-Fi"}'
+
+# expected response
+
+{
+    "error": "Input data invalid
+}
+
+```
+
+
+## Test place
+
 ```python
 # Creating a place
 
-curl -X POST http://yourapiurl.com/api/v1/places/ \
+curl -X POST http://localhost:5000/api/v1/places/ \
      -H "Content-Type: application/json" \
      -d '{
            "title": "Cozy Apartment",
@@ -90,6 +108,28 @@ curl -X POST http://yourapiurl.com/api/v1/places/ \
 }
 
 // 201 Created
+```
+
+- Testing invalid input
+
+```python
+
+curl -X POST http://localhost:5000/api/v1/places/ \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Cozy Apartment",
+           "description": "A nice place to stay",
+           "price": 100.0,
+           "latitude": 98.6523,
+           "longitude": -122.4194,
+           "owner_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+         }'
+
+# expected response
+
+{
+    "ValueError": "Latitude must be between -90 and 90"
+}
 ```
 
 ## AUTHORS
