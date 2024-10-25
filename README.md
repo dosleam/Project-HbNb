@@ -185,4 +185,4 @@ url -X POST "http://localhost:5000/api/v1/reviews/" \
 The authors are Lucas Legrand, Ema Decot, Jeremy Sousa, Mariama Goudiaby
 
 
-[](https://giphy.com/embed/elrFAUtV7ZOH7TSPhF)
+![gif](https://giphy.com/embed/elrFAUtV7ZOH7TSPhF)
