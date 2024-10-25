@@ -185,4 +185,4 @@ url -X POST "http://localhost:5000/api/v1/reviews/" \
 The authors are Lucas Legrand, Ema Decot, Jeremy Sousa, Mariama Goudiaby
 
 
-[]<iframe src="https://giphy.com/embed/elrFAUtV7ZOH7TSPhF" width="480" height="480" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hyperrpg-twitch-hyper-rpg-kollok-elrFAUtV7ZOH7TSPhF">via GIPHY</a></p>
+[gif]"https://giphy.com/embed/elrFAUtV7ZOH7TSPhF"
