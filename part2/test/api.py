@@ -12,13 +12,13 @@ def req(endpoint, methods="GET", payload=None):
         methods,
         f"{API}/{endpoint}",
         headers={"Content-Type": "application/json"} if methods == "POST" or methods == "PUT" else None,
-        json=payload if methods == "POST" or methods == "PUT" else None
+        json=payload if methods in ["POST", "PUT"] else None
     )
 
     try:
         return response.json(), response.status_code
-    except:
-        raise ValueError(f"Invalid response of {endpoint} endpoint.")
+    except ValueError:
+        return {"error": "Réponse non JSON", "content": response.text}, response.status_code
 
 def post(endpoint, payload):
     return req(endpoint, "POST", payload)
