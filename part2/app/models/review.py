@@ -12,14 +12,18 @@ class Review(BaseModel):
     def rating(self):
         return self._rating
 
-    @text.setter
-    def texting(self, value):
-        if value is None:
-            raise ValueError("You must enter a text")
-        self.text = value
-
     @rating.setter
     def rating(self, value):
         if not (1 <= value <= 5):
             raise ValueError("Rating must be between 1 and 5")
         self._rating = value
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def texting(self, value):
+        if value is None:
+            raise ValueError("You must enter a text")
+        self.text = value
