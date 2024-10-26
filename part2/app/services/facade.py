@@ -63,7 +63,7 @@ class HBnBFacade:
         place = self.place_repo.get(place_id)
         if not place:
             return None
-        owner = self.user_repo.get(place.owner_id)
+        owner = self.user_repo.get(place.owner)
         amenities = [self.amenity_repo.get(amenity_id) for amenity_id in place.amenities]
         place.owner = owner
         place.amenities = amenities

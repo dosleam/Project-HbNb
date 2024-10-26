@@ -23,7 +23,7 @@ class Review(BaseModel):
         return self._text
 
     @text.setter
-    def texting(self, value):
+    def text(self, value):
         if value is None:
             raise ValueError("You must enter a text")
-        self.text = value
+        self._text = value

@@ -15,6 +15,9 @@ def req(endpoint, methods="GET", payload=None):
         json=payload if methods in ["POST", "PUT"] else None
     )
 
+    if response.status_code == 500:
+        print(f"Erreur 500 reçue : {response.text}")
+
     try:
         return response.json(), response.status_code
     except ValueError:
