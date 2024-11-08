@@ -12,7 +12,21 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
 
     def create_user(self, user_data):
-        user = User(**user_data)
+        """Creates a new user with hashed password."""
+        password = user_data.pop('password', None)
+        if not password:
+            raise ValueError("Password is required")
+
+        # Create a new User instance
+        user = User(**user_data, password=password)
+
+        # Hash the password before storing
+        user.hash_password(password)
+
+        # Print the hashed password to verify
+        print("Hashed password:", user.password)
+
+        # Add user to the repository
         self.user_repo.add(user)
         return user
 
@@ -28,7 +42,33 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
 
     def update_user(self, user_id, user_data):
-        return self.user_repo.update(user_id, user_data)
+        """Updates user information, including password if provided."""
+        user = self.get_user(user_id)
+        if not user:
+            raise ValueError("User not found")
+
+        # Vérifier et mettre à jour le mot de passe
+        if 'password' in user_data and user_data['password']:
+            print("Mise à jour du mot de passe")
+            user.hash_password(user_data['password'])
+            user_data.pop('password')
+
+            # Affichez le mot de passe haché après la mise à jour
+            print("Mot de passe haché (update_user):", user.password)
+            user_data.pop('password')
+
+        # Mise à jour des autres attributs
+        if 'first_name' in user_data:
+            user.first_name = user_data['first_name']
+        if 'last_name' in user_data:
+            user.last_name = user_data['last_name']
+        if 'email' in user_data:
+            user.email = user_data['email']
+
+        # Mettre à jour l'utilisateur dans le repository
+        self.user_repo.update(user_id, user)
+        return user
+
 
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
@@ -51,6 +91,7 @@ class HBnBFacade:
             raise ValueError("Latitude must be between -90 and 90")
         if not (-180 <= place_data['longitude'] <= 180):
             raise ValueError("Longitude must be between -180 and 180")
+
         owner = self.user_repo.get(place_data['owner'])
         if not owner:
             raise ValueError("Owner not found")
