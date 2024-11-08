@@ -11,6 +11,13 @@ user_model = api.model('User', {
     'password': fields.String(required=True, description='Password of the user', min_length=8)
 })
 
+user_response_model = api.model('UserResponse', {
+    'id': fields.String(description='ID of the user'),
+    'first_name': fields.String(description='First name of the user'),
+    'last_name': fields.String(description='Last name of the user'),
+    'email': fields.String(description='Email of the user')
+})
+
 @api.route('/')
 class UserList(Resource):
     @api.expect(user_model, validate=True)
@@ -40,6 +47,21 @@ class UserList(Resource):
             'last_name': new_user.last_name,
             'email': new_user.email
         }, 201
+
+    @api.marshal_list_with(user_response_model)
+    @api.response(200, 'List of users retrieved successfully')
+    def get(self):
+        """Retrieve all users"""
+        users = facade.get_all_users()
+        user_list = [
+            {
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            } for user in users
+        ]
+        return user_list, 200
 
 @api.route('/<user_id>')
 class UserResource(Resource):
