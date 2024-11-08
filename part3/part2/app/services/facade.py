@@ -23,7 +23,7 @@ class HBnBFacade:
         # Hash the password before storing
         user.hash_password(password)
 
-        # Print the hashed password to verify
+        # Print the hashed password onr the server to verify
         print("Hashed password:", user.password)
 
         # Add user to the repository
