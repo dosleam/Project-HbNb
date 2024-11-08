@@ -1,6 +1,10 @@
-from app.models import User  # Assurez-vous que User est correctement importé
+from app.persistence.repository import InMemoryRepository
+from app.models.user import User
+from app.models.amenity import Amenity
+from app.models.review import Review
+from app.models.place import Place
 from flask_bcrypt import Bcrypt
-from app import bcrypt  # Assurez-vous que Bcrypt est bien initialisé
+from app import bcrypt
 
 def get_all_users():
     """Retourne tous les utilisateurs"""
