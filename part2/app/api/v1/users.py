@@ -3,11 +3,12 @@ from app.services import facade
 
 api = Namespace('users', description='User operations')
 
-# Define the user model for input validation and documentation
+# Définir le modèle utilisateur pour la validation des entrées et la documentation
 user_model = api.model('User', {
     'first_name': fields.String(required=True, description='First name of the user'),
     'last_name': fields.String(required=True, description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True, description='Password of the user', min_length=8)
 })
 
 @api.route('/')
@@ -20,17 +21,25 @@ class UserList(Resource):
         """Register a new user"""
         user_data = api.payload
 
-        # Simulate email uniqueness check (to be replaced by real validation with persistence)
+        # Vérifier l'unicité de l'email
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
 
         try:
-            new_user = facade.create_user(user_data)
+            # Hacher le mot de passe avant de créer l'utilisateur
+            password = user_data.pop('password')
+            new_user = facade.create_user(user_data, password)
         except ValueError as e:
-            return {"error": str(e)}
+            return {"error": str(e)}, 400
 
-        return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
+        # Ne pas retourner le mot de passe dans la réponse
+        return {
+            'id': new_user.id,
+            'first_name': new_user.first_name,
+            'last_name': new_user.last_name,
+            'email': new_user.email
+        }, 201
 
 @api.route('/<user_id>')
 class UserResource(Resource):
@@ -41,19 +50,33 @@ class UserResource(Resource):
         user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
-        return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+        # Ne pas retourner le mot de passe dans la réponse
+        return {
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
+        }, 200
 
     @api.expect(user_model)
     @api.response(200, 'User updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
     def put(self, user_id):
+        """Update user details by ID"""
         obj = facade.get_user(user_id)
         if not obj:
             return {"error": "User not found"}, 404
 
         try:
-            facade.update_user(user_id, api.payload)
+            user_data = api.payload
+            # Si le mot de passe est présent, le hacher avant la mise à jour
+            password = user_data.get('password')
+            if password:
+                facade.update_user(user_id, user_data, password)
+            else:
+                facade.update_user(user_id, user_data)
         except Exception as e:
             return {"error": "Invalid input data"}, 400
+
         return {"message": "User updated successfully"}, 200
