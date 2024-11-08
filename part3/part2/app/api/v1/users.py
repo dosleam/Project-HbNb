@@ -65,16 +65,13 @@ class UserResource(Resource):
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
     def put(self, user_id):
-        # Récupérer l'utilisateur
         user = facade.get_user(user_id)
         if not user:
             return {"error": "User not found"}, 404
 
-        # Afficher le payload pour le débogage
         print("Payload reçu :", api.payload)
 
         try:
-            # Mettre à jour l'utilisateur avec les données du payload
             updated_user = facade.update_user(user_id, api.payload)
         except Exception as e:
             print("Erreur lors de la mise à jour :", e)

@@ -47,17 +47,14 @@ class HBnBFacade:
         if not user:
             raise ValueError("User not found")
 
-        # Vérifier et mettre à jour le mot de passe
         if 'password' in user_data and user_data['password']:
             print("Mise à jour du mot de passe")
             user.hash_password(user_data['password'])
             user_data.pop('password')
 
-            # Affichez le mot de passe haché après la mise à jour
             print("Mot de passe haché (update_user):", user.password)
             user_data.pop('password')
 
-        # Mise à jour des autres attributs
         if 'first_name' in user_data:
             user.first_name = user_data['first_name']
         if 'last_name' in user_data:
@@ -65,8 +62,7 @@ class HBnBFacade:
         if 'email' in user_data:
             user.email = user_data['email']
 
-        # Mettre à jour l'utilisateur dans le repository
-        self.user_repo.update(user_id, user)
+        self.user_repo.update(user_id, user.password)
         return user
 
 

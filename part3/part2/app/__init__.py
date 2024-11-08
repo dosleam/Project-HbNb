@@ -30,6 +30,4 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(places_ns, path="/api/v1/places")
     api.add_namespace(amenities_ns, path="/api/v1/amenities")
 
-    # Placeholder for future API namespaces (like reviews, places, etc.)
-
     return app

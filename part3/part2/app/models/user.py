@@ -12,8 +12,8 @@ class User(BaseModel):
         self.email = email
         self.is_admin = is_admin
         self.places = []
-        self._password = None  # Internal attribute for storing hashed password
-        self.hash_password(password)  # Hash the password during initialization
+        self._password = None
+        self.hash_password(password)
 
     # Property and setter for first_name
     @property
@@ -64,14 +64,11 @@ class User(BaseModel):
         self.hash_password(plain_password)
 
     def hash_password(self, plain_password):
-        """Hashes the password before storing it."""
         hashed_password = bcrypt.generate_password_hash(plain_password).decode('utf-8')
         self._password = hashed_password
 
     def verify_password(self, password):
-        """Vérifie si le mot de passe correspond à celui haché."""
         return bcrypt.check_password_hash(self.password, password)
 
     def add_place(self, place):
-        """Add a place to the user."""
         self.places.append(place)
