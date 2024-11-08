@@ -1,9 +1,12 @@
 from flask import Flask
 from flask_restx import Api
+from flask_bcrypt import Bcrypt
 from app.api.v1.reviews import api as reviews_ns
 from app.api.v1.users import api as users_ns
 from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.places import api as places_ns
+
+bcrypt = Bcrypt()
 
 def create_app(config_class="config.DevelopmentConfig"):
     # Création de l'application Flask
@@ -11,6 +14,9 @@ def create_app(config_class="config.DevelopmentConfig"):
 
     # Chargement de la configuration à partir de l'objet de configuration
     app.config.from_object(config_class)
+
+    # Initialiser Flask-Bcrypt
+    bcrypt.init_app(app)
 
     # Initialisation de l'API
     api = Api(
