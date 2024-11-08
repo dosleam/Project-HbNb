@@ -39,7 +39,7 @@ class UserList(Resource):
             'id': new_user.id,
             'first_name': new_user.first_name,
             'last_name': new_user.last_name,
-            'email': new_user.email
+            'email': new_user.email,
         }, 201
 
 @api.route('/<user_id>')
