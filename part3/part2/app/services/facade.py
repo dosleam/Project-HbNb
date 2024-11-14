@@ -23,9 +23,6 @@ class HBnBFacade:
         # Hash the password before storing
         user.hash_password(password)
 
-        # Print the hashed password onr the server to verify
-        print("Hashed password:", user.password)
-
         # Add user to the repository
         self.user_repo.add(user)
         return user
@@ -42,29 +39,7 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
 
     def update_user(self, user_id, user_data):
-        """Updates user information, including password if provided."""
-        user = self.get_user(user_id)
-        if not user:
-            raise ValueError("User not found")
-
-        if 'password' in user_data and user_data['password']:
-            print("Mise à jour du mot de passe")
-            user.hash_password(user_data['password'])
-            user_data.pop('password')
-
-            print("Mot de passe haché (update_user):", user.password)
-            user_data.pop('password')
-
-        if 'first_name' in user_data:
-            user.first_name = user_data['first_name']
-        if 'last_name' in user_data:
-            user.last_name = user_data['last_name']
-        if 'email' in user_data:
-            user.email = user_data['email']
-
-        self.user_repo.update(user_id, user.password)
-        return user
-
+        return self.user_repo.update(user_id, user_data)
 
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)

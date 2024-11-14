@@ -42,6 +42,13 @@ class UserList(Resource):
             'email': new_user.email,
         }, 201
 
+    def get(self):
+        """Retrieve a list of all users"""
+        return [
+            { "id": user.id, "first_name": user.first_name, "last_name": user.last_name, "email": user.email }
+            for user in facade.get_all_users()
+        ]
+
 @api.route('/<user_id>')
 class UserResource(Resource):
     @api.response(200, 'User details retrieved successfully')
@@ -62,25 +69,20 @@ class UserResource(Resource):
 
     @api.expect(user_model)
     @api.response(200, 'User updated successfully')
+    @api.response(403, 'Unauthorized action')
     @api.response(404, 'User not found')
+    @api.response(400, 'You cannot modify email or password')
     @api.response(400, 'Invalid input data')
     def put(self, user_id):
-        user = facade.get_user(user_id)
-        if not user:
-            return {"error": "User not found"}, 404
-
-        print("Payload reçu :", api.payload)
+        payload = api.payload
+        if "email" in payload or "password" in payload:
+            return {"error": "You cannot modify email or password"}, 400
 
         try:
-            updated_user = facade.update_user(user_id, api.payload)
-        except Exception as e:
-            print("Erreur lors de la mise à jour :", e)
-            return {"error": "Invalid input data"}, 400
+            user = facade.update_user(user_id, api.payload)
 
-        return {
-            "message": "User updated successfully",
-            "id": updated_user.id,
-            "first_name": updated_user.first_name,
-            "last_name": updated_user.last_name,
-            "email": updated_user.email
-        }, 200
+            if not user:
+                return {"error": "User not found"}, 404
+            return { "id": user.id, "first_name": user.first_name, "last_name": user.last_name, "email": user.email }
+        except Exception as e:
+            return {"error": "Invalid input data"}, 400
