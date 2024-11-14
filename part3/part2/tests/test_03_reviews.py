@@ -2,7 +2,7 @@
 Testing Reviews endpoint
 """
 from utils import *
-@pytest.mark.skip()
+
 class TestReviews:
     def test_create_reviews(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         assert shared_data.place_id != None

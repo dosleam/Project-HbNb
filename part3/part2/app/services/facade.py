@@ -73,33 +73,13 @@ class HBnBFacade:
 
     def get_place(self, place_id):
         place = self.place_repo.get(place_id)
-        if not place:
-            return None
-        owner = self.user_repo.get(place.owner)
-        amenities = [self.amenity_repo.get(amenity_id) for amenity_id in place.amenities]
-        place.owner = owner
-        place.amenities = amenities
         return place
 
     def get_all_places(self):
         return self.place_repo.get_all()
 
     def update_place(self, place_id, place_data):
-        place = self.place_repo.get(place_id)
-        if not place:
-            return None
-
-        if 'price' in place_data and place_data['price'] < 0:
-            raise ValueError("Price must be a non-negative float")
-        if 'latitude' in place_data and not (-90 <= place_data['latitude'] <= 90):
-            raise ValueError("Latitude must be between -90 and 90")
-        if 'longitude' in place_data and not (-180 <= place_data['longitude'] <= 180):
-            raise ValueError("Longitude must be between -180 and 180")
-
-        for key, value in place_data.items():
-            setattr(place, key, value)
-        self.place_repo.update(place_id, place)
-        return place
+        return self.place_repo.update(place_id,place_data)
 
     def create_review(self, review_data):
         review = Review(**review_data)
