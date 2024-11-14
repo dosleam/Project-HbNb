@@ -22,9 +22,7 @@ place_model = api.model('Place', {
     'price': fields.Float(required=True, description='Price per night'),
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
-    'owner': fields.Nested(user_model, description='Owner details'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
+    'owner': fields.String(user_model, description='Owner details'),
 })
 
 @api.route('/')
@@ -37,16 +35,14 @@ class PlaceList(Resource):
         """Register a new place"""
         current_user = get_jwt_identity()
         place_data = api.payload
-        amenities = place_data['amenities']
-        del place_data['amenities']
 
         if place_data['owner'] != current_user['id']:
-            return {'error': 'Unauthorized to create a place'}, 403
+            return {'error': 'Unauthorized action.'}, 403
         try:
             new_place = facade.create_place(place_data)
         except ValueError as e:
-            return {"error": str(e)}, 400
-        return { "id": new_place.id, "title": new_place.title, "price": new_place.price, "latitude": new_place.latitude, "longitude": new_place.longitude }, 201
+            return {"error": "Invalid input data"}, 400
+        return { "description": new_place.description, "owner": new_place.owner, "id": new_place.id, "title": new_place.title, "price": new_place.price, "latitude": new_place.latitude, "longitude": new_place.longitude }, 201
 
     @api.response(200, 'List of places retrieved successfully')
     def get(self):
@@ -92,7 +88,7 @@ class PlaceResource(Resource):
         if not place:
             return {"error": "Place not found"}, 404
 
-        if place_data['owner'] != current_user['id']:
+        if place_id != current_user['id']:
             return {'error': 'Unauthorized to update a place'}, 403
 
         try:
