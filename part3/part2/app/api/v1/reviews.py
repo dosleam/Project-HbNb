@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 api = Namespace('reviews', description='Review operations')
 
@@ -16,9 +17,18 @@ class ReviewList(Resource):
     @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def post(self):
         """Register a new review"""
+        current_user = get_jwt_identity()
         review_data = api.payload
+
+        print(current_user)
+        print(review_data["user_id"])
+
+        if review_data["user_id"] != current_user['id']:
+            return {'error': 'Unauthorized to create a review'}, 403
+
         try:
             new_review = facade.create_review(review_data)
         except ValueError as e:
@@ -51,6 +61,7 @@ class ReviewResource(Resource):
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def put(self, review_id):
         """Update a review's information"""
         # Get the review to update
@@ -58,8 +69,14 @@ class ReviewResource(Resource):
         if not obj:
             return {"Error": "Review not found"}, 404
 
+        current_user = get_jwt_identity()
+
         # Extract updated data from the request payload
         review_data = api.payload
+
+        if review_data['owner'] != current_user['id']:
+            return {'error': 'Unauthorized to update a review'}, 403
+
         try:
             updated_review = facade.update_review(obj, review_data)  # Pass both obj and review_data
         except Exception as e:
@@ -80,8 +97,18 @@ class ReviewResource(Resource):
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
+    @jwt_required()
     def delete(self, review_id):
         """Delete a review"""
+
+        current_user = get_jwt_identity()
+
+        review_data = facade.review_repo(review_id)
+        print(review_data)
+
+        if review_data['owner'] != current_user['id']:
+            return {'error': 'Unauthorized to delete a review'}, 403
+
         if review_id in self.data:
             del self.data[review_id]
             return {"message": "Review delete successfully"}, 200
