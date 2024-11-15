@@ -25,8 +25,8 @@ class ReviewList(Resource):
         place_id = review_data.get("place_id", None)
         current_user = get_jwt_identity()
 
-        print(current_user)
-        print(review_data["user_id"])
+        #print(current_user)
+        #print(review_data["user_id"])
 
         place = facade.get_place(place_id)
         if not place:
@@ -61,8 +61,6 @@ class ReviewResource(Resource):
     "id": obj.id,
     "text": obj.text,
     "rating": obj.rating,
-    "place_id": obj.place_id,
-    "user_id": obj.user_id
 }, 200
 
     @api.expect(review_model)
@@ -73,33 +71,21 @@ class ReviewResource(Resource):
     def put(self, review_id):
         """Update a review's information"""
         # Get the review to update
+        current_user = get_jwt_identity()
         obj = facade.get_review(review_id)
         if not obj:
-            return {"Error": "Review not found"}, 404
+            return {"error": "Review not found"}, 404
 
-        current_user = get_jwt_identity()
-
-        # Extract updated data from the request payload
-        review_data = api.payload
-
-        if review_data['owner'] != current_user['id']:
-            return {'error': 'Unauthorized to update a review'}, 403
+        if not current_user["is_admin"]:
+            if current_user["id"] != obj.user_id:
+                return {"error": "Unauthorized action"}, 403
 
         try:
-            updated_review = facade.update_review(obj, review_data)  # Pass both obj and review_data
-        except Exception as e:
-            return {"Error": str(e)}, 400  # Return the error if update fails
+            facade.update_review(review_id, api.payload)
+        except Exception as ve:
+            return {"error": "Invalid input data"}, 400
 
-        if updated_review is None:
-            return {"Error": "Failed to update review"}, 500  # Handle failure in update
-
-        return {
-            "id": updated_review.id,
-            "text": updated_review.text,
-            "rating": updated_review.rating,
-            "place_id": updated_review.place_id,
-            "user_id": updated_review.user_id
-        }, 200
+        return {"message": "Review updated successfully"}, 200
 
 
 
@@ -112,7 +98,7 @@ class ReviewResource(Resource):
         current_user = get_jwt_identity()
 
         review_data = facade.review_repo(review_id)
-        print(review_data)
+        #print(review_data)
 
         if review_data['owner'] != current_user['id']:
             return {'error': 'Unauthorized to delete a review'}, 403
@@ -130,6 +116,7 @@ class PlaceReviewList(Resource):
     def get(self, place_id):
         """Get all reviews for a specific place"""
         reviews = facade.get_reviews_by_place(place_id)
+
         if not reviews:
             return {"Error": "place not found"}, 404
         return [{"id": review.id, "text": review.text, "rating": review.rating} for review in reviews], 200
