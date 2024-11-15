@@ -20,19 +20,27 @@ class ReviewList(Resource):
     @jwt_required()
     def post(self):
         """Register a new review"""
-        current_user = get_jwt_identity()
         review_data = api.payload
+        user_id = review_data.get("user_id", None)
+        place_id = review_data.get("place_id", None)
+        current_user = get_jwt_identity()
 
         print(current_user)
         print(review_data["user_id"])
 
-        if review_data["user_id"] != current_user['id']:
-            return {'error': 'Unauthorized to create a review'}, 403
+        place = facade.get_place(place_id)
+        if not place:
+            return {"error": "Invalid place id"}, 404
+
+        if current_user["id"] != user_id:
+            return {"error": "Unauthorized action"}, 403
 
         try:
             new_review = facade.create_review(review_data)
-        except ValueError as e:
-            return {"message: error review data"}, 400
+        except Exception as e:
+            return {"error": "Invalid input data"}, 400
+
+        place.reviews.append(new_review)
         return {"id": new_review.id, "text": new_review.text, "rating": new_review.rating, "place_id": new_review.place_id, "user_id": new_review.user_id}, 201
 
     @api.response(200, 'List of reviews retrieved successfully')
