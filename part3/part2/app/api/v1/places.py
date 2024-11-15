@@ -103,3 +103,26 @@ class PlaceResource(Resource):
             print(e)
             return {"error": "Invalid input data"}, 400
         return {"message": "Place updated successfully"}, 200
+
+@api.route("/<place_id>/add_amenity/<amenity_id>")
+class PlaceAmenity(Resource):
+    @jwt_required()
+    @api.response(200, "Add amenity to place.")
+    @api.response(404, "Place not found")
+    @api.response(404, "Amenity not found")
+    def post(self, place_id, amenity_id):
+        """Associate an amenity to a place."""
+        current_user = get_jwt_identity()
+        place = facade.get_place(place_id)
+
+        if not place:
+            return {"error": "Invalid place id"}
+        if current_user["id"] != place.owner:
+            return { "error": "Unauthorized action." }, 403
+
+        amenity = facade.get_amenity(amenity_id)
+        if not amenity:
+            return {"message": "Add amenity to place"}
+
+        place.amenities.append(amenity)
+        return {"message": "Add amenity to place"}, 200

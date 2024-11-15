@@ -53,4 +53,4 @@ class AmenityResource(Resource):
             return {"error": "Amenity not found"}, 404
 
         facade.update_amenity(amenity_id, api.payload)
-        return {"message": "Amenity updated successfull"}, 200
+        return {"message": "Amenity updated successfully"}, 200

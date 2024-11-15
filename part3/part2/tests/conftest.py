@@ -1,6 +1,8 @@
 """
 Execute tests: pytest -s -v --disable-warnings
 
+skip test : @pytest.mark.skip()
+
 Support endpoint (/api/v1):
     ✔️ POST /users
     GET /users

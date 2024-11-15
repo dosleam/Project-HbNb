@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from flask import request
-from app import facade
+from app.services import facade
 
 api = Namespace('admin', description='Admin operations')
 
