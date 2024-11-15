@@ -55,6 +55,9 @@ class HBnBFacade:
     def update_amenity(self, amenity_id, amenity_data):
         return self.amenity_repo.update(amenity_id, amenity_data)
 
+    def delete_amenity(self, amenity_id):
+        return self.amenity_repo.delete(amenity_id)
+
     def create_place(self, place_data):
         if place_data['price'] < 0:
             raise ValueError("Price must be a non-negative float")
@@ -80,6 +83,9 @@ class HBnBFacade:
 
     def update_place(self, place_id, place_data):
         return self.place_repo.update(place_id,place_data)
+
+    def delete_place(self, place_id):
+        return self.place_repo.delete(place_id)
 
     def create_review(self, review_data):
         review = Review(**review_data)
