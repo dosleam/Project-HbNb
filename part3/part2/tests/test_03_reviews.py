@@ -65,6 +65,8 @@ class TestReviews:
         r = dict_without_keys(shared_data.review_payload, ["place_id"])
         r["id"] = shared_data.review_id
 
+        print([r, dict_without_keys(shared_data.reviews[0]["data"], ["place_id"])])
+
         check_response(
             auth_client.get(f"/api/v1/reviews/places/{shared_data.place_id}"), # Big flemme de modifier le endpoint
             status_code=200,
@@ -92,6 +94,7 @@ class TestReviews:
             array_template=array_without_value(shared_data.reviews_template(), ["place_id"]) + ["id"],
             array_payload=[r, dict_without_keys(shared_data.reviews[0]["data"], ["place_id"])]
         )
+
 
     def test_delete_review(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         assert shared_data.place_id != None
