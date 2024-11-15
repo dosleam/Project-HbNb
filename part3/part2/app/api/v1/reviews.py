@@ -96,19 +96,17 @@ class ReviewResource(Resource):
         """Delete a review"""
 
         current_user = get_jwt_identity()
+        review_data = facade.get_review(review_id)
 
-        review_data = facade.review_repo(review_id)
-        #print(review_data)
+        if not review_data:
+            return {"error": 'Review not found'}, 404
 
-        if review_data['owner'] != current_user['id']:
-            return {'error': 'Unauthorized to delete a review'}, 403
+        if review_data.user_id != current_user['id']:
+            return {"error": "Unauthorized action"}, 403
 
-        if review_id in self.data:
-            del self.data[review_id]
-            return {"message": "Review delete successfully"}, 200
-        else:
-            return {"message": "Review not found"}, 404
+        facade.delete_review(review_id)
 
+        return {"message": "Review deleted successfully"}, 200
 @api.route('/places/<place_id>')
 class PlaceReviewList(Resource):
     @api.response(200, 'List of reviews for the place retrieved successfully')
