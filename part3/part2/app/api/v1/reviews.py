@@ -123,7 +123,7 @@ class ReviewResource(Resource):
         else:
             return {"message": "Review not found"}, 404
 
-@api.route('/places/<place_id>/reviews')
+@api.route('/places/<place_id>')
 class PlaceReviewList(Resource):
     @api.response(200, 'List of reviews for the place retrieved successfully')
     @api.response(404, 'Place not found')
