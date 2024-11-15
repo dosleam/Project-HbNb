@@ -9,9 +9,11 @@ from app.api.v1.auth import api as auth_ns
 from app.api.v1.admin import api as admin_ns
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
+db = SQLAlchemy()
 
 def create_app(config_class="config.DevelopmentConfig"):
     """
@@ -30,6 +32,7 @@ def create_app(config_class="config.DevelopmentConfig"):
 
     bcrypt.init_app(app)
     jwt.init_app(app)
+    db.init_app(app)
 
     # Initialize the API with Flask-RESTX
     api = Api(app, version='1.0', title='HBnB API', description='HBnB Application API')
