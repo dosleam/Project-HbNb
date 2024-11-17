@@ -1,3 +1,3 @@
-from .facade import HBnBFacade
+from .facade import *
 
 facade = HBnBFacade()
