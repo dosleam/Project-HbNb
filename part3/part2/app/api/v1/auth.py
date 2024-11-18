@@ -43,7 +43,7 @@ class Login(Resource):
 
             email = api.payload.get('email')
             password = api.payload.get('password')
-            print(f"Reçu email: {email}, mot de passe: {password}")
+
             if not email or not password:
                 return {
                     'error': 'Email and password are required',
@@ -52,14 +52,16 @@ class Login(Resource):
 
             # Récupération de l'utilisateur
             user = facade.get_user_by_email(email)
-
+            print(f"Utilisateur récupéré: {user}")
             # Vérification des credentials
             if not user or not user.verify_password(password):
+                print(f"Mot de passe incorrect pour l'utilisateur {email}")
                 return {
                     'error': 'Invalid credentials',
                     'status_code': HTTPStatus.UNAUTHORIZED
                 }, HTTPStatus.UNAUTHORIZED
-
+            print(email)
+            print(password)
             # Création du token avec les claims
             token_expires = timedelta(hours=1)
             token_identity = {

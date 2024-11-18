@@ -26,7 +26,7 @@ class TestUsers:
         )
 
         shared_data.token = result["access_token"]
-    @pytest.mark.skip()
+        
     def test_get_info_user(self, client: FlaskClient, shared_data: SharedData):
         check_response(
             client.get(f"/api/v1/users/{shared_data.user_id}"),
@@ -36,7 +36,7 @@ class TestUsers:
                 dict_without_keys(shared_data.user_payload, ["password"])
             )
         )
-    @pytest.mark.skip()
+
     def test_get_all_users(self, client: FlaskClient, shared_data: SharedData):
         new_user = shared_data.user_payload.copy()
         new_user["first_name"] = "Pablo"
@@ -58,7 +58,7 @@ class TestUsers:
             array_template=shared_data.user_template()
         )
 
-    @pytest.mark.skip()
+
     def test_modify_user(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         assert shared_data.token != None
 

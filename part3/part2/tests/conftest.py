@@ -35,7 +35,8 @@ import sys
 import pytest
 sys.path.append("..")
 
-from app import create_app, db
+from app import create_app
+from app.extensions import db
 from typing import Dict
 from flask.testing import FlaskClient
 from utils import AuthenticatedClient, SharedData

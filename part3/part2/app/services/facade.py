@@ -13,16 +13,8 @@ class HBnBFacade:
         self.review_repo = SQLAlchemyRepository(Review)
 
     def create_user(self, user_data):
-        """Creates a new user with hashed password."""
-        password = user_data.pop('password', None)
-        if not password:
-            raise ValueError("Password is required")
-
         # Create a new User instance
-        user = User(**user_data, password=password)
-
-        # Hash the password before storing
-        user.hash_password(password)
+        user = User(**user_data)
 
         # Add user to the repository
         self.user_repo.add(user)
@@ -37,7 +29,7 @@ class HBnBFacade:
         return self.user_repo.get_all()
 
     def get_user_by_email(self, email):
-        return self.user_repo.get_by_attribute('email', email)
+        return self.user_repo.get_user_by_email(email)
 
     def update_user(self, user_id, user_data):
         return self.user_repo.update(user_id, user_data)

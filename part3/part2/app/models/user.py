@@ -1,79 +1,64 @@
 from .base import BaseModel
-from flask_bcrypt import Bcrypt
+from app.extensions import db, bcrypt
 import re
-from app.extensions import db
-import uuid
-from .base import BaseModel
-
-bcrypt = Bcrypt()
 
 class User(BaseModel):
-
     __tablename__ = 'users'
 
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    _password = db.Column(db.String(128), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
+    _first_name = db.Column("first_name", db.String(50), nullable=False)
+    _last_name = db.Column("last_name", db.String(50), nullable=False)
+    _email = db.Column("email", db.String(120), nullable=False, unique=True)
+    _password = db.Column("password", db.String(128), nullable=False)
+    _is_admin = db.Column("is_admin", db.Boolean, default=False)
 
     reviews = db.relationship('Review', back_populates='user', lazy='dynamic')
     places = db.relationship('Place', back_populates='owner', lazy='dynamic')
 
-    # Property and setter for first_name
     @property
     def first_name(self):
         return self._first_name
 
     @first_name.setter
     def first_name(self, value):
-        if value is None:
-            raise ValueError("You must enter a first name")
         if len(value) > 50:
             raise ValueError("First name must not exceed 50 characters")
         self._first_name = value
 
-    # Property and setter for last_name
     @property
     def last_name(self):
         return self._last_name
 
     @last_name.setter
     def last_name(self, value):
-        if value is None:
-            raise ValueError("You must enter a last name")
         if len(value) > 50:
             raise ValueError("Last name must not exceed 50 characters")
         self._last_name = value
 
-    # Property and setter for email
     @property
     def email(self):
         return self._email
 
     @email.setter
     def email(self, value):
-        if value is None:
-            raise ValueError("You must enter an email")
         if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
-            raise ValueError("Invalid input data")
+            raise ValueError("Invalid email format")
         self._email = value
 
-    # Property and setter for password
+    @property
+    def is_admin(self):
+        return self._is_admin
+
+    @is_admin.setter
+    def is_admin(self, value = False):
+        self._is_admin = value
+
     @property
     def password(self):
-        return self._password
+        raise AttributeError("Password is a private attribut")
 
     @password.setter
-    def password(self, plain_password):
-        self.hash_password(plain_password)
-
-    def hash_password(self, plain_password):
-        hashed_password = bcrypt.generate_password_hash(plain_password).decode('utf-8')
-        self._password = hashed_password
+    def password(self, password):
+        self._password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
-
-    def add_place(self, place):
-        self.places.append(place)
+        return bcrypt.check_password_hash(self._password, password)

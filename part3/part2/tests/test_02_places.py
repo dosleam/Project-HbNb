@@ -2,7 +2,7 @@
 Testing place endpoint
 """
 from utils import *
-@pytest.mark.skip()
+
 class TestPlaces:
     def test_create_place(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         assert shared_data.token != None

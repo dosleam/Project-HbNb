@@ -30,8 +30,6 @@ class UserList(Resource):
             # Create the new user with hashed password
             new_user = facade.create_user(user_data)
         except ValueError as e:
-            return {"error": str(e)}, 400
-        except Exception as e:
             return {"error": "An unexpected error occurred: " + str(e)}, 500
 
         # Return user details without the password
