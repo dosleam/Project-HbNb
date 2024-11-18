@@ -20,17 +20,32 @@ class PlaceList(Resource):
     @api.response(400, 'Invalid input data')
     @jwt_required()
     def post(self):
-        """Register a new place"""
+
         current_user = get_jwt_identity()
         place_data = api.payload
+        owner_id = place_data.get("owner", 0)
 
-        if place_data['owner'] != current_user['id']:
-            return {'error': 'Unauthorized action.'}, 403
+        if current_user["id"] != owner_id:
+            return {"error": "Unauthorized action."}, 403
+
+        owner = facade.get_user(current_user["id"])
+        if not owner:
+            return {'error': "Owner not found"}, 404
+
         try:
             new_place = facade.create_place(place_data)
         except ValueError as e:
             return {"error": "Invalid input data"}, 400
-        return { "description": new_place.description, "owner": new_place.owner, "id": new_place.id, "title": new_place.title, "price": new_place.price, "latitude": new_place.latitude, "longitude": new_place.longitude }, 201
+
+        return {
+            "id": new_place.id,
+            "title": new_place.title,
+            "description": new_place.description,
+            "price": new_place.price,
+            "latitude": new_place.latitude,
+            "longitude": new_place.longitude,
+            "owner": current_user["id"]
+        }, 201
 
     @api.response(200, 'List of places retrieved successfully')
     def get(self):

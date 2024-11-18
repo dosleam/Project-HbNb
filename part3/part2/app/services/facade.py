@@ -4,12 +4,13 @@ from app.models.amenity import Amenity
 from app.models.review import Review
 from app.models.place import Place
 from app.persistence.user_repository import UserRepository
+from app.persistence.places_repository import PlacesRepository
 
 class HBnBFacade:
     def __init__(self):
         self.user_repo = UserRepository()
         self.amenity_repo = SQLAlchemyRepository(Amenity)
-        self.place_repo = SQLAlchemyRepository(Place)
+        self.place_repo = PlacesRepository()
         self.review_repo = SQLAlchemyRepository(Review)
 
     def create_user(self, user_data):
@@ -52,30 +53,29 @@ class HBnBFacade:
         return self.amenity_repo.delete(amenity_id)
 
     def create_place(self, place_data):
-        if place_data['price'] < 0:
-            raise ValueError("Price must be a non-negative float")
-        if not (-90 <= place_data['latitude'] <= 90):
-            raise ValueError("Latitude must be between -90 and 90")
-        if not (-180 <= place_data['longitude'] <= 180):
-            raise ValueError("Longitude must be between -180 and 180")
+        place = Place(
+            title=place_data["title"],
+            description=place_data["description"],
+            price=place_data["price"],
+            latitude=place_data["latitude"],
+            longitude=place_data["longitude"],
+            _owner_id=place_data["owner"]
+        )
 
-        owner = self.user_repo.get(place_data['owner'])
-        if not owner:
-            raise ValueError("Owner not found")
-
-        place = Place(**place_data)
         self.place_repo.add(place)
         return place
 
     def get_place(self, place_id):
-        place = self.place_repo.get(place_id)
-        return place
+        return self.place_repo.get(place_id)
 
     def get_all_places(self):
         return self.place_repo.get_all()
 
+    def get_place_by_user(self, user_id):
+        return self.place_repo.get_by_attribute("id", user_id)
+
     def update_place(self, place_id, place_data):
-        return self.place_repo.update(place_id,place_data)
+        return self.place_repo.update(place_id, place_data)
 
     def delete_place(self, place_id):
         return self.place_repo.delete(place_id)

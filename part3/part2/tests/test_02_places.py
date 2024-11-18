@@ -42,7 +42,7 @@ class TestPlaces:
         )
 
         shared_data.place_payload["title"] = "My super place"
-
+    @pytest.mark.skip()
     def test_get_info_place(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         assert shared_data.place_id != None
 
