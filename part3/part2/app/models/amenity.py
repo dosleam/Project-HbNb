@@ -1,6 +1,6 @@
 from .base import BaseModel
 from .place import place_amenities
-from app import db
+from app.extensions import db
 
 class Amenity(BaseModel):
     __tablename__ = "amenities"

@@ -1,9 +1,9 @@
 from .base import BaseModel
 from flask_bcrypt import Bcrypt
 import re
-from app import db, bcrypt
+from app.extensions import db
 import uuid
-from .base_model import BaseModel
+from .base import BaseModel
 
 bcrypt = Bcrypt()
 

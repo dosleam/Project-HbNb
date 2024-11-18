@@ -1,5 +1,5 @@
 from .base import BaseModel
-from app import db
+from app.extensions import db
 
 place_amenities = db.Table(
     'place_amenities',
