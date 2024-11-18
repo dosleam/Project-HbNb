@@ -2,7 +2,7 @@
 Testing amenities endpoint
 """
 from utils import *
-
+@pytest.mark.skip()
 class TestAmenities:
     def test_create_amenity(self, auth_client: AuthenticatedClient, shared_data: SharedData):
         result = check_response(

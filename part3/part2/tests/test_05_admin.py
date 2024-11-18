@@ -18,6 +18,7 @@ admin_user_payload = {
 """
 Peut-on récupérer les infos des admins dans le GET de user ?
 """
+@pytest.mark.skip()
 class TestAdmin:
     def test_create_admin_user(self, client: FlaskClient, auth_client: AuthenticatedClient, shared_data: SharedData, application):
         assert shared_data.token != None

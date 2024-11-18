@@ -10,10 +10,10 @@ from app.api.v1.admin import api as admin_ns
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+from app.extensions import db
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
-db = SQLAlchemy()
 
 def create_app(config_class="config.DevelopmentConfig"):
     """

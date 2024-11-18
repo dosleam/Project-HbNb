@@ -43,7 +43,7 @@ class Login(Resource):
 
             email = api.payload.get('email')
             password = api.payload.get('password')
-
+            print(f"Reçu email: {email}, mot de passe: {password}")
             if not email or not password:
                 return {
                     'error': 'Email and password are required',
