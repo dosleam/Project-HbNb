@@ -156,7 +156,7 @@ class PlaceAmenity(Resource):
 
         if not place:
             return {"error": "Invalid place id"}
-        if current_user["id"] != place.owner:
+        if current_user["id"] != place.owner_id:
             return { "error": "Unauthorized action." }, 403
 
         amenity = facade.get_amenity(amenity_id)
