@@ -20,17 +20,6 @@ class User(BaseModel):
     reviews = db.relationship('Review', back_populates='user', lazy='dynamic')
     places = db.relationship('Place', back_populates='owner', lazy='dynamic')
 
-
-    def __init__(self, first_name, last_name, email, password, is_admin=False):
-        super().__init__()
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.is_admin = is_admin
-        self.places = []
-        self._password = None
-        self.hash_password(password)
-
     # Property and setter for first_name
     @property
     def first_name(self):

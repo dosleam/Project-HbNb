@@ -56,7 +56,7 @@ class Login(Resource):
             # Vérification des credentials
             if not user or not user.verify_password(password):
                 return {
-                    'error': 'Invalid email or password',
+                    'error': 'Invalid credentials',
                     'status_code': HTTPStatus.UNAUTHORIZED
                 }, HTTPStatus.UNAUTHORIZED
 
