@@ -8,31 +8,35 @@
 </head>
 <body>
     <header>
-        <img src="images/logo.png" alt="Application Logo" class="logo">
-        <h1>Add a Review</h1>
+        <div class="header-container">
+            <img src="images/logo.png" alt="Application Logo" class="logo">
+            <nav>
+                <a href="login.html" id="login-link">Login</a>
+            </nav>
+        </div>
     </header>
     <main>
-        <form id="review-form">
-            <label for="place-name">Place Name:</label>
-            <input type="text" id="place-name" name="place-name" required>
-            
-            <label for="review">Your Review:</label>
-            <textarea id="review" name="review" rows="4" required></textarea>
-            
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating" required>
-                <option value="5">5 - Excellent</option>
-                <option value="4">4 - Very Good</option>
-                <option value="3">3 - Good</option>
-                <option value="2">2 - Fair</option>
-                <option value="1">1 - Poor</option>
-            </select>
-            
-            <button type="submit">Submit Review</button>
-        </form>
+        <section class="review-section">
+            <h1>Reviewing: Beautiful Beach House</h1>
+            <form id="review-form" class="form">
+                <label for="review">Your Review:</label>
+                <textarea id="review" name="review" rows="4" required></textarea>
+                
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                </select>
+                
+                <button type="submit">Submit Review</button>
+            </form>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2024 All Rights Reserved.</p>
+        <p>&copy; 2024 HBNB Evolution. All rights reserved.</p>
     </footer>
     <script src="scripts.js"></script>
 </body>
