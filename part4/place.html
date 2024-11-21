@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Application Logo" class="logo">
+        <h1>Place Details</h1>
+    </header>
+    <main>
+        <section class="place-details">
+            <h2 class="place-info">Luxury Villa</h2>
+            <p class="place-info"><strong>Host:</strong> John Doe</p>
+            <p class="place-info"><strong>Price:</strong> $200/night</p>
+            <p class="place-info"><strong>Description:</strong> A beautiful villa with amazing views and premium facilities.</p>
+            <h3 class="place-info">Amenities:</h3>
+            <ul class="place-info">
+                <li>Wi-Fi</li>
+                <li>Swimming Pool</li>
+                <li>Private Parking</li>
+                <li>Fully equipped kitchen</li>
+            </ul>
+        </section>
+        
+        <section id="reviews">
+            <h2>Reviews</h2>
+            <!-- Example of reviews dynamically generated -->
+            <div class="review-card">
+                <p><strong>User:</strong> Jane</p>
+                <p>Comment: Amazing stay! Everything was perfect.</p>
+                <p>Rating: 5/5</p>
+            </div>
+            <div class="review-card">
+                <p><strong>User:</strong> Alex</p>
+                <p>Comment: Great experience, but a bit pricey.</p>
+                <p>Rating: 4/5</p>
+            </div>
+        </section>
+
+        <!-- If user is logged in, show the form -->
+        <section id="add-review" class="add-review">
+            <h2>Add a Review</h2>
+            <form id="review-form" class="form">
+                <label for="review-text">Your Review:</label>
+                <textarea id="review-text" name="review-text" rows="4" required></textarea>
+                
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Good</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="1">1 - Poor</option>
+                </select>
+                
+                <button type="submit">Submit Review</button>
+            </form>
+        </section>
+
+        <!-- If user is not logged in, show the button -->
+        <a href="add_review.html" id="add-review-button" class="add-review-button">Add a Review</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 All Rights Reserved.</p>
+    </footer>
+    <script>
+        // Example logic to toggle between button and form (mock login check)
+        const userLoggedIn = true; // Change to false to test behavior for non-logged-in users
+        const addReviewSection = document.querySelector('#add-review');
+        const addReviewButton = document.querySelector('#add-review-button');
+
+        if (userLoggedIn) {
+            addReviewButton.style.display = 'none';
+            addReviewSection.style.display = 'block';
+        } else {
+            addReviewButton.style.display = 'block';
+            addReviewSection.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
