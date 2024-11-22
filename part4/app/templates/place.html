@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html">
+                <img src="../static/images/logo.png" alt="Application Logo" class="logo">
+            </a>
+            <nav>
+                <a href="/login.html" id="login-link">Login</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="place-details">
+            {% if place %}
+                <h1 id="place-name">{{ place.name }}</h1>
+                <div class="details-card">
+                    <p><strong>Host:</strong> {{ place.host }}</p>
+                    <p><strong>Price per night:</strong> {{ place.price }}</p>
+                    <p><strong>Description:</strong> {{ place.description }}</p>
+                    <p><strong>Amenities:</strong> {{ place.amenities }}</p>
+                </div>
+            {% else %}
+                <h1 id="place-name">Place not found</h1>
+            {% endif %}
+        </section>
+        
+        <section id="reviews">
+            <h2>Reviews</h2>
+            <!-- Vous pouvez ajouter des avis ici si disponibles dans vos données -->
+        </section>
+
+        <section id="add-review" class="add-review">
+            <h2>Add a Review</h2>
+            <form id="review-form" class="form">
+                <label for="review-text">Your Review:</label>
+                <textarea id="review-text" name="review-text" rows="4" required></textarea>
+                
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Good</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="1">1 - Poor</option>
+                </select>
+                
+                <button type="submit">Submit Review</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 All Rights Reserved</p>
+    </footer>
+</body>
+</html>

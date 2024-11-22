@@ -1,4 +1,4 @@
-/* Reset de base pour éviter les marges et les bordures par défaut */
+/* Reset de base */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,7 +14,7 @@ body {
 
 /* En-tête */
 header {
-    background-color: #008cff; /* Couleur de fond orange */
+    background-color: #008cff;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -29,8 +29,8 @@ header {
 }
 
 .logo {
-    height: 50px; /* Ajuste la hauteur du logo */
-    margin-right: 20px; /* Marge à droite pour séparer du menu */
+    height: 50px;
+    margin-right: 20px;
 }
 
 nav a {
@@ -42,9 +42,9 @@ nav a {
 /* Main container */
 main {
     padding: 2rem;
-    max-width: 800px; /* Largeur maximale pour centrer le contenu */
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center; /* Centrage du contenu */
+    text-align: center;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -56,11 +56,18 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
+/* Titre "Available Places" */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center; /* Centre le titre */
+}
+
 /* Section de filtre */
 #filter {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Dispose les éléments verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -68,9 +75,9 @@ h1 {
 /* Liste des lieux */
 #places-list {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    justify-content: center; /* Centre les cartes */
+    gap: 20px; /* Espacement entre les cartes */
+    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
 }
 
 /* Cartes des lieux */
@@ -78,14 +85,17 @@ h1 {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre portée */
-    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Largeur fixe pour les cartes */
     text-align: center;
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Aligne les éléments à l'intérieur */
 }
 
 .place-card:hover {
-    transform: translateY(-5px); /* Légère élévation au survol */
+    transform: translateY(-5px);
 }
 
 .place-card h3 {
@@ -100,7 +110,7 @@ h1 {
 
 .details-button {
     text-decoration: none;
-    background-color: #008cff; /* Couleur de fond orange */
+    background-color: #008cff;
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -108,7 +118,7 @@ h1 {
 }
 
 .details-button:hover {
-    background-color: #008cff; /* Variation plus foncée au survol */
+    background-color: #008cff;
 }
 
 /* Détails du lieu (page place.html) */
@@ -118,7 +128,7 @@ h1 {
     border-radius: 10px;
     margin-bottom: 2rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Alignement à gauche pour le texte */
+    text-align: center;
 }
 
 .place-info {
@@ -201,12 +211,15 @@ ul.place-info li {
     background-color: #008cff;
 }
 
-/* Footer */
+/* Footer fixe en bas de page */
 footer {
-    text-align: center;
-    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: #333;
     color: #fff;
-    margin-top: 2rem;
-    border-top: 5px solid #008cff; /* Ligne de séparation pour correspondre au header */
+    text-align: center;
+    padding: 1rem;
+    border-top: 5px solid #008cff;
 }

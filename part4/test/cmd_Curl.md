@@ -4,7 +4,10 @@ Voici les commandes cURL pour tester les endpoints de user, amenities, reviews, 
 
 # Créer un nouvel utilisateur :
 
-curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com"}'
+curl -X POST http://localhost:5000/api/v1/users/ \
+-H "Content-Type: application/json" \
+-d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "password": "Password"}'
+
 
 # Récupérer tous les utilisateurs :
 
