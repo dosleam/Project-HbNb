@@ -24,14 +24,19 @@ const ADD_REVIEW = 'add_review.html';
 
 // Fonction qui vérifie si l'utilisateur est loggé ou non
 function checkAuthentication() {
-  const token = getCookie('token');
-  const loginLink = document.getElementById('login-link');
-  if (!token) {
-    loginLink.style.display = 'block';
-  } else {
-    loginLink.style.display = 'none';
-}
-}
+    const token = getCookie('token');
+    const loginLink = document.getElementById('login-link');
+  
+    if (loginLink) { // Vérifie que l'élément existe
+      if (!token) {
+        loginLink.style.display = 'block';
+      } else {
+        loginLink.style.display = 'none';
+      }
+    } else {
+      console.warn('Element with ID "login-link" not found.');
+    }
+  }
 // Fonction pour récupérer le cookie et ainsi vérifier si l'utilisateur est loggé
 function getCookie(name) {
   const cookies = document.cookie.split(";");
