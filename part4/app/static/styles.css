@@ -14,11 +14,13 @@ body {
 
 /* En-tête */
 header {
-    background-color: #008cff;
+    background-color: #008cff; /* Bleu principal */
+    color: #fff;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre */
 }
 
 .header-container {
@@ -29,14 +31,31 @@ header {
 }
 
 .logo {
-    height: 50px;
-    margin-right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+}
+
+header .login-btn {
+    background-color: white;
+    color: #008cff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+header .login-btn:hover {
+    background-color: #005fa3; /* Bleu plus foncé */
+    color: white;
 }
 
 /* Main container */
@@ -60,14 +79,14 @@ h1 {
 h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    text-align: center; /* Centre le titre */
+    text-align: center;
 }
 
 /* Section de filtre */
 #filter {
     display: flex;
-    flex-direction: column; /* Dispose les éléments verticalement */
-    align-items: center; /* Centre les éléments horizontalement */
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -75,9 +94,9 @@ h2 {
 /* Liste des lieux */
 #places-list {
     display: flex;
-    justify-content: center; /* Centre les cartes */
-    gap: 20px; /* Espacement entre les cartes */
-    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 /* Cartes des lieux */
@@ -86,12 +105,12 @@ h2 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Largeur fixe pour les cartes */
+    width: 300px;
     text-align: center;
     transition: transform 0.2s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Aligne les éléments à l'intérieur */
+    justify-content: space-between;
 }
 
 .place-card:hover {
@@ -118,7 +137,7 @@ h2 {
 }
 
 .details-button:hover {
-    background-color: #008cff;
+    background-color: #005fa3;
 }
 
 /* Détails du lieu (page place.html) */
@@ -132,12 +151,23 @@ h2 {
 }
 
 .place-info {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
+    text-align: left;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
-.place-info h2 {
-    margin-top: 0;
+.place-info h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #008cff;
+}
+
+.place-info p {
+    font-size: 1rem;
 }
 
 ul.place-info {
@@ -156,10 +186,10 @@ ul.place-info li {
 }
 
 .review-card {
-    background-color: #f9f9f9;
+    background-color: #f7faff; /* Légèrement bleu clair */
     padding: 1rem;
     border-radius: 10px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
     text-align: left;
 }
@@ -170,10 +200,15 @@ ul.place-info li {
 
 .review-card strong {
     font-weight: bold;
+    color: #008cff;
 }
 
 /* Formulaire d'ajout d'avis (add_review.html) */
 #review-form {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -198,17 +233,18 @@ ul.place-info li {
 
 #review-form button {
     background-color: #008cff;
-    color: #fff;
-    padding: 10px;
-    border: none;
+    color: white;
+    padding: 0.7rem 1.2rem;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 #review-form button:hover {
-    background-color: #008cff;
+    background-color: #005fa3;
 }
 
 /* Footer fixe en bas de page */
@@ -217,9 +253,9 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #333;
-    color: #fff;
+    background-color: #004080; /* Bleu foncé */
+    color: white;
     text-align: center;
     padding: 1rem;
-    border-top: 5px solid #008cff;
+    border-top: 3px solid #008cff;
 }
