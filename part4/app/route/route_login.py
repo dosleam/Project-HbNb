@@ -5,7 +5,7 @@ login_bp = Blueprint('login_bp', __name__)
 # Simuler une base de données utilisateur
 USER_DATABASE = {
     'jeremy.sousa@outlook.fr': {
-        'password': 'Dosletal',  # Remplace par une vraie logique de génération de token
+        'password': 'Dosletal1',  # Remplace par une vraie logique de génération de token
     }
 }
 

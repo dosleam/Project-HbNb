@@ -103,3 +103,14 @@ class ProtectedResource(Resource):
 
         # Retourner une réponse protégée
         return {'message': f'Hello, user {user_id}!'}, 200
+
+@api.route('/logout')
+class Logout(Resource):
+    @jwt_required()
+    def post(self):
+        """Logout user by invalidating the JWT token"""
+        response = {
+            'message': 'Successfully logged out'
+        }
+        # Supprimez le cookie si nécessaire côté client
+        return response, HTTPStatus.OK
