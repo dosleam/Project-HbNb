@@ -4,42 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Review</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="header-container">
-            <a href="index.html">
-                <img src="../static/images/logo.png" alt="Application Logo" class="logo">
-            </a>
-            <nav>
-                <a href="../templates/login.html" id="login-link">Login</a>
-            </nav>
-        </div>
+        <img src="images/logo.png" alt="Application Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
+        </nav>
     </header>
     <main>
-        <section class="review-section">
-            <h1>Reviewing: Beautiful Beach House</h1>
-            <form id="review-form" class="form">
-                <label for="review">Your Review:</label>
-                <textarea id="review" name="review" rows="4" required></textarea>
-                
-                <label for="rating">Rating:</label>
-                <select id="rating" name="rating" required>
-                    <option value="5">5 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="2">2 Stars</option>
-                    <option value="1">1 Star</option>
-                </select>
-                
-                <button type="submit">Submit Review</button>
-            </form>
+        <section id="place-info">
+            <!-- Placeholder for place identification -->
+            <h1>Reviewing: [Place Name]</h1>
         </section>
+        <form id="review-form" class="form">
+            <h2>Add a Review</h2>
+            <label for="review">Your Review:</label>
+            <textarea id="review" name="review" required></textarea>
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required>
+                <option value="">Select Rating</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+            </select>
+            <button type="submit" class="button">Submit Review</button>
+        </form>
     </main>
     <footer>
         <p>&copy; 2024 All Rights Reserved</p>
     </footer>
-    <script src="/static/scripts.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>

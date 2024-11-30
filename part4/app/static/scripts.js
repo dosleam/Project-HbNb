@@ -82,6 +82,7 @@ async function getUser(id) {
   }
 }
 
+
 async function getUserId() {
   const token = getCookie('token');
 
